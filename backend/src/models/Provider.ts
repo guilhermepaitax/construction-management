@@ -4,10 +4,15 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
+import ProviderContact from './ProviderContact';
+import ProviderBilling from './ProviderBilling';
+import ProviderObservation from './ProviderObservation';
+
 @Entity('providers')
-class User {
+class Provider {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,6 +28,18 @@ class User {
   @Column()
   inscricao_estadual: string;
 
+  @OneToMany(() => ProviderContact, providerContact => providerContact.provider)
+  providerContact: ProviderContact;
+
+  @OneToMany(() => ProviderBilling, providerBilling => providerBilling.provider)
+  providerBilling: ProviderBilling;
+
+  @OneToMany(
+    () => ProviderObservation,
+    providerObservation => providerObservation.provider,
+  )
+  providerObservation: ProviderObservation;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -30,4 +47,4 @@ class User {
   updated_at: Date;
 }
 
-export default User;
+export default Provider;
