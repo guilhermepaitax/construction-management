@@ -1,14 +1,19 @@
-import React from 'react';
-import { Button, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import React, { useMemo } from 'react';
+import { Button, CssBaseline, createMuiTheme, ThemeProvider, useMediaQuery } from '@material-ui/core';
 
 const App: React.FC = () => {
 
-  const theme = createMuiTheme({
-    palette: {
-      type: 'dark',
-    },
-  });
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
+  const theme = useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
 
   return (
     <ThemeProvider theme={theme}>
