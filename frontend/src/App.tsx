@@ -1,27 +1,20 @@
-import React, { useMemo } from 'react';
-import { Button, CssBaseline, createMuiTheme, ThemeProvider, useMediaQuery } from '@material-ui/core';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
+
+import Routes from './routes';
+
+import AppProvider from './hooks';
 
 const App: React.FC = () => {
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
-  const theme = useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  );
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Button variant="contained" color="primary">
-        Olá Mundo
-      </Button>
-    </ThemeProvider>
+    <Router>
+      <AppProvider>
+        <Routes />
+        <CssBaseline />
+      </AppProvider>
+    </Router>
   );
 }
 
